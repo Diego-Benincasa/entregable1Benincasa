@@ -8,13 +8,17 @@ let diferenciaPeso;
 let registroPesadas = [];
 
 // Saludo personalizado
-let nombreUsuario = prompt("Ingresa tu nombre");
+let nombreUsuario;
+
+for (; !nombreUsuario;) {
+  nombreUsuario = prompt("Ingresa tu nombre");
+}
+
 confirm(
   "Bienvenido a CEMODA, " +
     nombreUsuario +
     ". Para continuar, presiona Aceptar."
 );
-
 // Función para pedir datos
 function entradaDatos() {
   matriculaCamion = prompt("Matrícula del camión a registrar");
@@ -69,3 +73,7 @@ while (continuar) {
 
 // Mostrar historial en consola
 console.log("Historial de pesadas:", registroPesadas);
+
+
+
+
