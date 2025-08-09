@@ -1,48 +1,71 @@
-//Declaracón de variables con scope global
-
+// Declaración de variables globales
 let matriculaCamion;
 let taraCamion;
 let netoFacturado;
 let pesoBalanza;
 let pesoEsperado;
 let diferenciaPeso;
+let registroPesadas = [];
 
-//Saludo personalizado
-
+// Saludo personalizado
 let nombreUsuario = prompt("Ingresa tu nombre");
-confirm("Bienvenido a CEMODA, " + " " + nombreUsuario + " " + "para continuar presiona aceptar");
+confirm(
+  "Bienvenido a CEMODA, " +
+    nombreUsuario +
+    ". Para continuar, presiona Aceptar."
+);
 
-//Pidiendo datos
-
+// Función para pedir datos
 function entradaDatos() {
-  matriculaCamion = prompt("Matricula del camion a registrar");
-  taraCamion = parseFloat(prompt("Cuanto pesa el camion vacio"));
-  netoFacturado = parseFloat(prompt("Ingresa el neto facturado!"));
-  pesoBalanza = parseFloat(prompt("Que peso marca la balanza"));
+  matriculaCamion = prompt("Matrícula del camión a registrar");
+  taraCamion = parseFloat(prompt("¿Cuánto pesa el camión vacío?"));
+  netoFacturado = parseFloat(prompt("Ingresa el neto facturado"));
+  pesoBalanza = parseFloat(prompt("¿Qué peso marca la balanza?"));
 }
 
-//Proceso de datos
-
+// Función para procesar el pesaje
 function procesarPesaje() {
   pesoEsperado = taraCamion + netoFacturado;
   diferenciaPeso = pesoBalanza - pesoEsperado;
 }
 
-//Exposicion de datos
-
+// Función para mostrar resultados
 function mostrarResultados() {
   if (diferenciaPeso === 0) {
-    console.log("Autorizadisimo");
+    alert("Autorizadísimo");
   } else if (diferenciaPeso >= 1 && diferenciaPeso <= 20) {
-    console.log("Autorizado VERDE");
+    alert("Autorizado VERDE");
   } else if (diferenciaPeso <= -1 && diferenciaPeso >= -20) {
-    console.log("Autorizado AMARILLO");
+    alert("Autorizado AMARILLO");
   } else if (diferenciaPeso >= 21) {
-    console.log("No autorizado ROJO");
-  } else if (diferenciaPeso <=-21 ){
-    console.log("No autorizado AMARILLO");
-  } else console.log("Ingrese un dato valido");
+    alert("No autorizado ROJO");
+  } else if (diferenciaPeso <= -21) {
+    alert("No autorizado AMARILLO");
+  } else {
+    alert("Ingrese un dato válido");
+  }
 }
-entradaDatos();
-procesarPesaje();
-mostrarResultados();
+
+// Bucle principal para registrar múltiples camiones
+let continuar = true;
+
+while (continuar) {
+  entradaDatos();
+  procesarPesaje();
+  mostrarResultados();
+
+  // Guardar registro
+  registroPesadas.push({
+    matricula: matriculaCamion,
+    tara: taraCamion,
+    neto: netoFacturado,
+    balanza: pesoBalanza,
+    esperado: pesoEsperado,
+    diferencia: diferenciaPeso,
+  });
+
+  continuar = confirm("¿Querés validar otro camión?");
+}
+
+// Mostrar historial en consola
+console.log("Historial de pesadas:", registroPesadas);
